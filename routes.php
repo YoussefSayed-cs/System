@@ -1,12 +1,12 @@
 <?php
 
-$router->get('/', 'controllers/index.php');
-$router->get('/about', 'controllers/about.php');
-$router->get('/contact', 'controllers/contact.php');
+$router->get('/', 'Controllers/index.php');
+$router->get('/about', 'Controllers/about.php');
+$router->get('/contact', 'Controllers/contact.php');
 
-$router->get('/notes', 'controllers/notes/index.php');
-$router->get('/note', 'controllers/notes/show.php');
-$router->delete('/note', 'controllers/notes/destroy.php');
+$router->get('/notes', 'Controllers/notes/index.php');
+$router->get('/note', 'Controllers/notes/show.php');
+$router->delete('/note', 'Controllers/notes/destroy.php');
 
-$router->get('/notes/create', 'controllers/notes/create.php');
-$router->post('/notes', 'controllers/notes/store.php');
+$router->get('/notes/create', 'Controllers/notes/create.php');
+$router->post('/notes', 'Controllers/notes/store.php');
