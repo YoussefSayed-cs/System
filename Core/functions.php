@@ -34,7 +34,7 @@ abort($status);
 return true;
 }
 
-function base_path($path)
+function    base_path($path)
 {
 return BASE_PATH . $path;
 }
