@@ -4,7 +4,7 @@ use Core\Response;
 
 function dd($value)
 {
-    echo "<pre>";   
+    echo "<pre>";
     var_dump($value);
     echo "</pre>";
 
@@ -20,7 +20,7 @@ function abort($code = 404)
 {
     http_response_code($code);
 
-    require base_path("Views/{$code}.php");
+    require base_path("views/{$code}.php");
 
     die();
 }
@@ -43,22 +43,16 @@ function view($path, $attributes = [])
 {
     extract($attributes);
 
-    require base_path('Views/' . $path);
+    require base_path('views/' . $path);
 }
 
 function redirect($path)
 {
-   header("location: {$path}");
+    header("location: {$path}");
     exit();
 }
 
-function login($user)
+function old($key, $default = '')
 {
-    (new \Core\Authenticator())->login($user);
+    return Core\Session::get('old')[$key] ?? $default;
 }
-
-function logout()
-{
-    (new \Core\Authenticator())->logout();
-}
-
