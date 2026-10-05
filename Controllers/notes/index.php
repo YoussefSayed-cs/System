@@ -5,6 +5,8 @@ use Core\Database;
 
 $db = App::resolve('Core\Database');
 
-$notes = $db->query('select * from notes where user_id = 1')->get();
+$notes = $db->query('select * from notes where user_id = :user_id', [
+    'user_id' => $_SESSION['user']['id']
+])->get();
 
 view("notes/index.view.php", ['heading' => 'My Notes','notes' => $notes]);

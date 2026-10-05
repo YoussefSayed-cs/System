@@ -6,9 +6,21 @@ class Guest
 {
     public function handle()
     {
-        if ($_SESSION['user'] ?? false) {
-            header('location: /');
-            exit();
+        $user = $_SESSION['user'] ?? null;
+
+        if (
+            ! is_array($user)
+            || ! isset($user['id'], $user['email'])
+            || (int) $user['id'] < 1
+        ) {
+            if ($user) {
+                logout();
+            }
+
+            return;
         }
+
+        header('location: /');
+        exit();
     }
 }

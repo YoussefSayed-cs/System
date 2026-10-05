@@ -6,7 +6,7 @@ use Core\Validator;
 
 $db = App::resolve(Database::class);
 
-$currentUserId = 1;
+$currentUserId = $_SESSION['user']['id'];
 
 // find the corresponding note
 $note = $db->query('select * from notes where id = :id', [
@@ -14,7 +14,7 @@ $note = $db->query('select * from notes where id = :id', [
 ])->findOrFail();
 
 // authorize that the current user can edit the note
-authorize($note['user_id'] === $currentUserId);
+authorize((int) $note['user_id'] === $currentUserId);
 
 // validate the form
 $errors = [];

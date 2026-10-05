@@ -30,9 +30,7 @@ $user = $db->query('select * from users where email = :email', [
 
 if ($user) {
     if (password_verify($password, $user['password'])) {
-        login([
-            'email' => $email
-        ]);
+        login($user);
 
         header('location: /');
         exit();
@@ -44,6 +42,5 @@ return view('session/create.view.php', [
         'email' => 'No matching account found for that email address and password.'
     ]
 ]);
-
 
 

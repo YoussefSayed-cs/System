@@ -5,10 +5,10 @@ use Core\Database;
 
 $db = App::resolve('Core\Database');
 
-$currentUserId = 1;
+$currentUserId = $_SESSION['user']['id'];
 
 $note = $db->query('select * from notes where id = :id', ['id' => $_GET['id']])->findOrFail();
 
-authorize($note['user_id'] === $currentUserId);
+authorize((int) $note['user_id'] === $currentUserId);
 
 view("notes/show.view.php", ['heading' => 'Note','note' => $note]);
