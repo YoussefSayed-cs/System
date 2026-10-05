@@ -14,6 +14,7 @@ class Authenticator
         if ($user) {
             if (password_verify($password, $user['password'])) {
                 $this->login([
+                    'id' => $user['id'],
                     'email' => $email
                 ]);
 
@@ -27,6 +28,7 @@ class Authenticator
     public function login($user)
     {
         $_SESSION['user'] = [
+            'id' => (int) $user['id'],
             'email' => $user['email']
         ];
 

@@ -52,3 +52,13 @@ function redirect($path)
     exit();
 }
 
+function login($user)
+{
+    (new \Core\Authenticator())->login($user);
+}
+
+function logout()
+{
+    (new \Core\Authenticator())->logout();
+}
+
