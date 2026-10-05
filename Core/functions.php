@@ -4,7 +4,7 @@ use Core\Response;
 
 function dd($value)
 {
-    echo "<pre>";
+    echo "<pre>";   
     var_dump($value);
     echo "</pre>";
 
@@ -46,22 +46,9 @@ function view($path, $attributes = [])
     require base_path('Views/' . $path);
 }
 
-function login($user)
+function redirect($path)
 {
-    $_SESSION['user'] = [
-        'id' => (int) $user['id'],
-        'email' => $user['email']
-    ];
-
-    session_regenerate_id(true);
+   header("location: {$path}");
+    exit();
 }
 
-function logout()
-{
-    $_SESSION = [];
-    session_destroy();
-
-    $params = session_get_cookie_params();
-    setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
-
-}
