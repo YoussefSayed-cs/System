@@ -1,0 +1,17 @@
+{
+    "name": "youssef/system",
+    "authors": [
+        {
+            "name": "Youssef",
+            "email": "youssefsayedcs1@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/" ,
+            "Http\\": "Http/" 
+        }
+    }
+
+}
