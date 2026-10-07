@@ -6,12 +6,21 @@
             "email": "youssefsayedcs1@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "illuminate/collections": "^13.35"
+    },
     "autoload": {
         "psr-4": {
             "Core\\": "Core/" ,
             "Http\\": "Http/" 
         }
+    },
+    "require-dev": {
+        "pestphp/pest": "^5.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
-
 }
