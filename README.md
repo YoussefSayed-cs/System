@@ -1,96 +1,78 @@
 # System
 
-مشروع تعليمي صغير بُني أثناء متابعة دروس Laracasts للتدرّب على تنظيم تطبيق PHP باستخدام فكرة **MVC**. يوفّر صفحات أساسية، وإدارة ملاحظات، وتسجيل حسابات الدخول والخروج.
+A small PHP project built while following Laracasts lessons to practice the MVC pattern. It includes basic pages, notes, and user registration and login.
 
-> المشروع للتعلّم، وليس إطار عمل Laravel كاملًا. كما لا يوجد مجلد `Models` منفصل حاليًا؛ استعلامات قاعدة البيانات موجودة داخل بعض ملفات المتحكّمات.
-
-## التقنيات
-
-- PHP
-- MySQL عبر PDO
-- Composer لتحميل الحزم والتحميل التلقائي للفئات
-- حزمة `illuminate/collections`، وPest ضمن اعتماديات التطوير
-- Tailwind CSS من CDN لتنسيق الواجهات
-
-## هيكل المشروع والملفات
+## Project structure
 
 ```text
 .
-├── Core/                              الأدوات الأساسية التي تشغّل التطبيق
-│   ├── Middleware/                    التحقق من حالة المستخدم قبل تنفيذ بعض المسارات
-│   │   ├── Authenticated.php          يسمح بالوصول للمستخدم المسجّل ويتعامل مع غير المسجّل
-│   │   ├── Guest.php                   يقيّد صفحات الضيف مثل التسجيل والدخول
-│   │   └── Middleware.php              يربط أسماء الوسائط البرمجية بأصنافها وينفّذها
-│   ├── App.php                         واجهة للوصول إلى حاوية الخدمات
-│   ├── Authenticator.php               التحقق من بيانات الدخول وإدارة تسجيل الدخول والخروج
-│   ├── Container.php                   حاوية بسيطة لربط الخدمات وحلّها
-│   ├── Database.php                    اتصال MySQL وتنفيذ الاستعلامات وجلب النتائج عبر PDO
-│   ├── Response.php                    ثوابت رموز HTTP المستخدمة، مثل 403 و404
-│   ├── Router.php                      تعريف المسارات ومطابقة الطلبات وتشغيل المتحكّم المناسب
-│   ├── Session.php                     حفظ بيانات الجلسة والرسائل المؤقتة وإتلاف الجلسة
-│   ├── ValidationException.php         استثناء يحمل أخطاء التحقق والبيانات القديمة للنموذج
-│   ├── Validator.php                    قواعد بسيطة للتحقق من النصوص والبريد الإلكتروني
-│   └── functions.php                    دوال مساعدة عامة للمسارات والعرض وإعادة التوجيه والصلاحيات
-├── Http/                              منطق التعامل مع طلبات HTTP
-│   ├── Controllers/                    ملفات تنفّذ إجراءات الصفحات والطلبات
-│   │   ├── notes/                      إجراءات عرض الملاحظات وإنشائها وتعديلها وحذفها
-│   │   │   ├── create.php              عرض نموذج إنشاء ملاحظة
-│   │   │   ├── destroy.php             حذف ملاحظة بعد التحقق من ملكيتها
-│   │   │   ├── edit.php                جلب ملاحظة مملوكة للمستخدم وعرض نموذج تعديلها
-│   │   │   ├── index.php               جلب ملاحظات المستخدم وعرض القائمة
-│   │   │   ├── show.php                جلب ملاحظة وا��دة وعرضها
-│   │   │   ├── store.php               التحقق من بيانات الملاحظة وحفظها
-│   │   │   └── update.php              التحقق من التعديلات وحفظها
-│   │   ├── registration/               إجراءات إنشاء الحساب
-│   │   │   ├── create.php              عرض نموذج التسجيل
-│   │   │   └── store.php               التحقق من بيانات التسجيل وإنشاء المستخدم
-│   │   ├── session/                    إجراءات جلسة المستخدم
-│   │   │   ├── create.php              عرض نموذج تسجيل الدخول
-│   │   │   ├── destroy.php             تسجيل الخروج ثم إعادة التوجيه
-│   │   │   └── store.php               التحقق من بيانات الدخول ومحاولة تسجيل المستخدم
-│   │   ├── about.php                   تجهيز وعرض صفحة "من نحن"
-│   │   ├── contact.php                 تجهيز وعرض صفحة التواصل
-│   │   └── index.php                   تجهيز وعرض الصفحة الرئيسية
+├── Core/                              Core application classes and helper functions
+│   ├── Middleware/                    Checks whether a user is logged in or a guest
+│   │   ├── Authenticated.php          Checks for a logged-in user
+│   │   ├── Guest.php                   Restricts pages to guests
+│   │   └── Middleware.php              Selects and runs middleware
+│   ├── App.php                         Provides access to the service container
+│   ├── Authenticator.php               Handles login and logout
+│   ├── Container.php                   Stores and resolves application services
+│   ├── Database.php                    Connects to MySQL and runs queries
+│   ├── Response.php                    Contains HTTP response codes
+│   ├── Router.php                      Matches requests to controllers
+│   ├── Session.php                     Handles session data and flash messages
+│   ├── ValidationException.php         Stores form validation errors
+│   ├── Validator.php                    Validates text and email values
+│   └── functions.php                    Shared helper functions
+├── Http/
+│   ├── Controllers/                    Handles page and form requests
+│   │   ├── notes/                      Creates, shows, edits, and deletes notes
+│   │   │   ├── create.php              Shows the create-note form
+│   │   │   ├── destroy.php             Deletes a note
+│   │   │   ├── edit.php                Shows the edit-note form
+│   │   │   ├── index.php               Shows the user's notes
+│   │   │   ├── show.php                Shows one note
+│   │   │   ├── store.php               Saves a new note
+│   │   │   └── update.php              Saves changes to a note
+│   │   ├── registration/               Handles user registration
+│   │   │   ├── create.php              Shows the registration form
+│   │   │   └── store.php               Creates a user account
+│   │   ├── session/                    Handles login and logout requests
+│   │   │   ├── create.php              Shows the login form
+│   │   │   ├── destroy.php             Logs the user out
+│   │   │   └── store.php               Checks login details
+│   │   ├── about.php                   Shows the About page
+│   │   ├── contact.php                 Shows the Contact page
+│   │   └── index.php                   Shows the Home page
 │   └── Forms/
-│       └── LoginForm.php               التحقق من مدخلات نموذج تسجيل الدخول وتجميع أخطائه
+│       └── LoginForm.php               Validates login form input
 ├── Public/
-│   └── index.php                       نقطة دخول التطبيق: تهيئة الجلسة والخدمات ثم توجيه الطلب
-├── Views/                             قوالب HTML/PHP التي تعرض صفحات التطبيق
-│   ├── notes/                          واجهات قائمة الملاحظات وإنشائها وعرضها وتعديلها
-│   │   ├── create.view.php             نموذج إنشاء ملاحظة
-│   │   ├── edit.view.php               نموذج تعديل ملاحظة مع خيار حذفها
-│   │   ├── index.view.php              قائمة ملاحظات المستخدم
-│   │   └── show.view.php               تفاصيل ملاحظة واحدة
-│   ├── partials/                       أجزاء مشتركة تستخدمها عدة صفحات
-│   │   ├── banner.php                  عنوان الصفحة
-│   │   ├── footer.php                  نهاية هيكل صفحة HTML
-│   │   ├── head.php                    بداية صفحة HTML وتحميل Tailwind CSS
-│   │   └── nav.php                     شريط التنقل وروابط الحساب والم��احظات
+│   └── index.php                       Application entry point
+├── Views/                             Page templates
+│   ├── notes/                          Note pages and forms
+│   │   ├── create.view.php             Create-note form
+│   │   ├── edit.view.php               Edit-note form
+│   │   ├── index.view.php              Notes list
+│   │   └── show.view.php               Note details
+│   ├── partials/                       Shared page sections
+│   │   ├── banner.php                  Page title
+│   │   ├── footer.php                  Page footer and closing HTML tags
+│   │   ├── head.php                    HTML page header and Tailwind CSS
+│   │   └── nav.php                     Navigation bar
 │   ├── registration/
-│   │   └── create.view.php             واجهة نموذج التسجيل
+│   │   └── create.view.php             Registration page
 │   ├── session/
-│   │   └── create.view.php             واجهة نموذج تسجيل الدخول
-│   ├── 403.php                         صفحة تظهر عند عدم امتلاك صلاحية الوصول
-│   ├── 404.php                         صفحة تظهر عندما لا يوجد المسار أو المحتوى المطلوب
-│   ├── about.view.php                  واجهة صفحة "من نحن"
-│   ├── contact.view.php                واجهة صفحة التواصل
-│   └── index.view.php                  واجهة الصفحة الرئيسية
-├── bootstrap.php                       إنشاء حاوية الخدمات وربط إعدادات قاعدة البيانات بها
-├── composer.json                       تعريف الحزم وإعدادات التحميل التلقائي للمشروع
-├── composer.lock                       تثبيت إصدارات الحزم المحددة لضمان تثبيت متكرر
-├── config.php                          إعدادات اتصال قاعدة بيانات MySQL
-├── routes.php                          تعريف عناوين URL وطرق HTTP والمتحكّمات المرتبطة بها
-└── .gitignore                          استثناء مجلد vendor من ملفات Git
+│   │   └── create.view.php             Login page
+│   ├── 403.php                         Access denied page
+│   ├── 404.php                         Not found page
+│   ├── about.view.php                  About page
+│   ├── contact.view.php                Contact page
+│   └── index.view.php                  Home page
+├── bootstrap.php                       Sets up application services
+├── composer.json                       Composer package and autoload settings
+├── composer.lock                       Locked Composer package versions
+├── config.php                          Database connection settings
+├── routes.php                          Application routes
+└── .gitignore                          Files ignored by Git
 ```
 
-## كيف يعمل التطبيق؟
+## MVC note
 
-يبدأ الطلب من `Public/index.php`، الذي يحمّل Composer ويهيّئ الجلسة والخدمات، ثم يقرأ المسارات من `routes.php`. يطابق `Core/Router.php` عنوان الطلب وطريقته، ويشغّل ملفًا مناسبًا من `Http/Controllers/` بعد تطبيق الوسيط المحدد للمسار. يتعامل المتحكّم مع البيانات عند الحاجة باستخدام `Core/Database.php`، ثم يمرّر البيانات إلى قالب في `Views/` لعرض النتيجة.
-
-## قاعدة البيانات
-
-إعدادات الاتصال موجودة في `config.php`، وتُستخدم جداول `users` و`notes` في استعلامات المشروع. عدّل بيانات الاتصال لتناسب بيئتك المحلية، ولا تستخدم بيانات اعتماد حقيقية أو ضعيفة في بيئة منشورة.
-
-## ملاحظة حول MVC
-
-في هذا المشروع، تمثّل ملفات `Http/Controllers/` طبقة **Controller**، وملفات `Views/` طبقة **View**، بينما تتولى `Core/Database.php` الوصول إلى البيانات. لم تُفصل طبقة **Model** في مجلد مستقل بعد؛ وهذا جزء من بساطة التطبيق التعليمية.
+`Http/Controllers/` contains the controllers, and `Views/` contains the views. Database queries are currently handled through `Core/Database.php`; there is no separate `Models/` folder in this learning project.
