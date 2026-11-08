@@ -1,8 +1,12 @@
 # System
 
-This repository is primarily a PHP project, with a small amount of Hack code. Based on the current repository language composition:
+A very small educational project built while following material on Laracasts. It was created to practice the Model–View–Controller (MVC) pattern.
+
+## Language composition
+
+Based on the current repository language composition:
 
 - PHP: 99.3%
 - Hack: 0.7%
 
-The codebase is therefore predominantly PHP-focused, with minimal additional Hack usage.
+The codebase is predominantly PHP, with minimal additional Hack usage.
